@@ -13,7 +13,7 @@ class jenkins::install {
   }
 
   package { 'jenkins':
-    ensure => installed,
+    ensure => $jenkins::version,
   }
 
 }
