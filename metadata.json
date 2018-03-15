@@ -2,7 +2,7 @@
   "name": "gutocarvalho-jenkins",
   "version": "1.0.0",
   "author": "gutocarvalho",
-  "summary": "This module will install the latest jenkins v2",
+  "summary": "This module will install the latest Jenkins v2",
   "license": "Apache-2.0",
   "source": "https://github.com/gutocarvalho/puppet-jenkins",
   "project_page": "https://github.com/gutocarvalho/puppet-jenkins",
@@ -48,6 +48,12 @@
     },
     {
       "name":"puppet/archive"
+    },
+    {
+      "name":"crayfishx/ldconfig"
+    },
+    {
+      "name":"stm/file_capability"
     }
   ],
   "pdk-version": "1.2.1",

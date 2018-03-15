@@ -1,95 +1,79 @@
+# Configures the Jenkins service
 class jenkins::config {
 
-  augeas {'jenkins_homedir':
+  Augeas {
     context => '/files/etc/sysconfig/jenkins',
+    notify  => Service['jenkins'],
+  }
+
+  augeas { 'jenkins_homedir':
     changes => [ "set JENKINS_HOME '\"${jenkins::homedir}\"'", ],
-    notify  => Service['jenkins']
   }
 
   if $jenkins::java_cmd {
-    augeas {'jenkins_java_cmd':
-      context => '/files/etc/sysconfig/jenkins',
+    augeas { 'jenkins_java_cmd':
       changes => [ "set JENKINS_JAVA_CMD '\"${jenkins::java_cmd}\"'", ],
-      notify  => Service['jenkins']
     }
   }
 
-  augeas {'jenkins_user':
-    context => '/files/etc/sysconfig/jenkins',
+  augeas { 'jenkins_user':
     changes => [ "set JENKINS_USER '\"${jenkins::user}\"'", ],
-    notify  => Service['jenkins']
   }
 
-  augeas {'jenkins_java_args':
-    context => '/files/etc/sysconfig/jenkins',
+  augeas { 'jenkins_java_args':
     changes => [ "set JENKINS_JAVA_OPTIONS '\"${jenkins::java_args}\"'", ],
-    notify  => Service['jenkins']
   }
 
-  augeas {'jenkins_http_port':
-    context => '/files/etc/sysconfig/jenkins',
-    changes => [ "set JENKINS_PORT '\"${jenkins::http_port}\"'", ],
-    notify  => Service['jenkins']
+  $real_http_port = $jenkins::use_reserved_ports ? {
+    true    => 80,
+    default => $jenkins::http_port,
+  }
+  augeas { 'jenkins_http_port':
+    changes => [ "set JENKINS_PORT '\"${real_http_port}\"'", ],
   }
 
-  augeas {'jenkins_http_listen_address':
-    context => '/files/etc/sysconfig/jenkins',
+  augeas { 'jenkins_http_listen_address':
     changes => [ "set JENKINS_LISTEN_ADDRESS '\"${jenkins::http_listen_address}\"'", ],
-    notify  => Service['jenkins']
   }
 
   if $jenkins::enable_https {
-    augeas {'jenkins_https_port':
-      context => '/files/etc/sysconfig/jenkins',
-      changes => [ "set JENKINS_HTTPS_PORT '\"${jenkins::https_port}\"'", ],
-      notify  => Service['jenkins']
+    $real_https_port = $jenkins::use_reserved_ports ? {
+      true    => 443,
+      default => $jenkins::https_port,
     }
-    augeas {'jenkins_https_keystore':
-      context => '/files/etc/sysconfig/jenkins',
+    augeas { 'jenkins_https_port':
+      changes => [ "set JENKINS_HTTPS_PORT '\"${real_https_port}\"'", ],
+    }
+    augeas { 'jenkins_https_keystore':
       changes => [ "set JENKINS_HTTPS_KEYSTORE '\"${jenkins::https_keystore}\"'", ],
-      notify  => Service['jenkins']
     }
-    augeas {'jenkins_https_keystore_password':
-      context => '/files/etc/sysconfig/jenkins',
+    augeas { 'jenkins_https_keystore_password':
       changes => [ "set JENKINS_HTTPS_KEYSTORE_PASSWORD '\"${jenkins::https_keystore_password}\"'", ],
-      notify  => Service['jenkins']
     }
-    augeas {'jenkins_https_listen_address':
-      context => '/files/etc/sysconfig/jenkins',
+    augeas { 'jenkins_https_listen_address':
       changes => [ "set JENKINS_HTTPS_LISTEN_ADDRESS '\"${jenkins::https_listen_address}\"'", ],
-      notify  => Service['jenkins']
     }
   }
 
-  augeas {'jenkins_debug_level':
-    context => '/files/etc/sysconfig/jenkins',
+  augeas { 'jenkins_debug_level':
     changes => [ "set JENKINS_DEBUG_LEVEL '\"${jenkins::debug}\"'", ],
-    notify  => Service['jenkins']
   }
 
-  augeas {'jenkins_enable_access_log':
-    context => '/files/etc/sysconfig/jenkins',
+  augeas { 'jenkins_enable_access_log':
     changes => [ "set JENKINS_ENABLE_ACCESS_LOG '\"${jenkins::enable_access_log}\"'", ],
-    notify  => Service['jenkins']
   }
 
-  augeas {'jenkins_handler_max':
-    context => '/files/etc/sysconfig/jenkins',
+  augeas { 'jenkins_handler_max':
     changes => [ "set JENKINS_HANDLER_MAX '\"${jenkins::handler_max}\"'", ],
-    notify  => Service['jenkins']
   }
 
-  augeas {'jenkins_handler_idle':
-    context => '/files/etc/sysconfig/jenkins',
+  augeas { 'jenkins_handler_idle':
     changes => [ "set JENKINS_HANDLER_IDLE '\"${jenkins::handler_idle}\"'", ],
-    notify  => Service['jenkins']
   }
 
   if $jenkins::args {
-    augeas {'jenkins_args':
-      context => '/files/etc/sysconfig/jenkins',
+    augeas { 'jenkins_args':
       changes => [ "set JENKINS_ARGS '\"${jenkins::args}\"'", ],
-      notify  => Service['jenkins']
     }
   }
 
