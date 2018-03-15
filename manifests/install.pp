@@ -1,3 +1,4 @@
+# Installs the Jenkins package
 class jenkins::install {
 
   class { 'java':
@@ -13,7 +14,10 @@ class jenkins::install {
   }
 
   package { 'jenkins':
-    ensure => $jenkins::version,
+    ensure  => $jenkins::version,
+    require => [
+      Yumrepo['jenkins'],
+    ],
   }
 
 }
