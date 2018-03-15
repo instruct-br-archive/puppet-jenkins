@@ -31,17 +31,18 @@ class jenkins(
   Integer $handler_max,
   Integer $handler_idle,
   String $java_args,
-  Integer[1024,65535] $http_port,
-  Integer[1024,65535] $https_port,
   String $http_listen_address,
   String $https_listen_address,
   Enum['yes','no'] $enable_access_log,
+  Boolean $use_reserved_ports = false,
+  Integer[1024,65535] $http_port = 8080,
+  Integer[1024,65535] $https_port = 8081,
   Boolean $enable_https    = false,
   $https_keystore          = undef,
   $https_keystore_password = undef,
   $args                    = undef,
   $java_cmd                = undef,
-  ) {
+) {
 
     include jenkins::install
     include jenkins::config
