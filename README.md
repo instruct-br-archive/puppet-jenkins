@@ -26,6 +26,8 @@ The main objective is to install jenkins with minimal intervention in the defaul
 
 Augeas resource type is used to change parameters inside the /etc/sysconfig/jenkins.
 
+This module supports running Jenkins on low ports such as 443 and 80 using native kernel features. i.e. it doesn't need a nginx proxy
+
 ## Supported Platforms
 
 This module was tested under these platforms
