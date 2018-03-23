@@ -26,6 +26,8 @@ The main objective is to install jenkins with minimal intervention in the defaul
 
 Augeas resource type is used to change parameters inside the /etc/sysconfig/jenkins.
 
+This module supports running Jenkins on low ports such as 443 and 80 using native kernel features. i.e. it doesn't need a nginx proxy
+
 ## Supported Platforms
 
 This module was tested under these platforms
@@ -99,6 +101,7 @@ class { 'jenkins':
   enable_https            => true,
   http_listen_address     => '192.168.250.80',
   https_listen_address    => '192.168.250.80',
+  use_reserved_ports      => false,
   http_port               => 8080,
   https_port              => 8081,
   https_keystore          => '/opt/jenkins.ks',
@@ -169,6 +172,12 @@ Maximum number of idle HTTP worker threads
 Type: String
 
 Options to pass to java when running Jenkins
+
+#### `use_reserved_ports`
+
+Type: Boolean
+
+Allow Jenkins in lower ports
 
 #### `http_port`
 
