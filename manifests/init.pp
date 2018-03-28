@@ -14,6 +14,7 @@
 # @param [String] https_listen_address IP address Jenkins listens on for HTTPS requests
 # @param [String] http_port Define the port of Jenkins service
 # @param [Boolean] enable_https Whether to enable HTTS or not
+# @param [Boolean] use_reserved_ports Whether reserved ports (80 and 443) should be used. Default: false
 # @param [String] https_port HTTPS port Jenkins is listening on
 # @param [String] https_keystore Path to the keystore in JKS format (as created by the JDK 'keytool')
 # @param [String] https_keystore_password Password to access the keystore defined in JENKINS_HTTPS_KEYSTORE

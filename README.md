@@ -177,7 +177,7 @@ Options to pass to java when running Jenkins
 
 Type: Boolean
 
-Allow Jenkins in lower ports
+Allow Jenkins in lower ports. Default: false
 
 #### `http_port`
 
